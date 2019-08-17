@@ -63,6 +63,7 @@
     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
     if(!audio) return; //stops function from running
     audio.currentTime = 0; //rewind tot he start
+    audio.volume = 0.4;
     audio.play();
     key.classList.add('playing')
   }
