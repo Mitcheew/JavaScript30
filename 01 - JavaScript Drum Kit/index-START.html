@@ -62,12 +62,8 @@
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
     if(!audio) return; //stops function from running
-<<<<<<< HEAD
     audio.currentTime = 0; //rewind tot he start
     audio.volume = 0.4;
-=======
-    audio.currentTime = 0; //rewind to the start
->>>>>>> d77b0ad8b9db5ae42813850e8bbfc56fe337044d
     audio.play();
     key.classList.add('playing')
   }
