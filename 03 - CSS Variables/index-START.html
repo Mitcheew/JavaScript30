@@ -5,7 +5,7 @@
   <title>Scoped CSS Variables and JS</title>
 </head>
 <body>
-  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+  <h2>Update CSS Variables with <span id='hl'>JS</span></h2>
 
   <div class="controls">
     <label for="spacing">Spacing:</label>
@@ -18,7 +18,7 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img id="image" src="./0.jpg">
 
   <style>
     :root {
@@ -33,7 +33,7 @@
       filter: blur(var(--blur));
     }
 
-    .hl {
+    #hl {
       color: var(--base);
     }
     /*
@@ -64,8 +64,21 @@
     function handleUpdate() {
       const suffix = this.dataset.sizing || '';
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
-    }
+      changeImage(this);
+      
+    };
+    function changeImage(x) {
+      if(x.name === "blur" && x.value <= 0){
+        document.getElementById("image").src = "./Rick.gif";
+        document.getElementById("hl").innerHTML = "Rick Astley"
+      } 
+      if(x.name === "blur" && x.value > 0){
+        document.getElementById("image").src = "./0.jpg";
+        document.getElementById("hl").innerHTML = "JS"
 
+      }
+
+    }
     inputs.forEach(input => input.addEventListener('change', handleUpdate));
     inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
