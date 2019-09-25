@@ -7,29 +7,57 @@
 </head>
 
 <body>
-  <canvas id="draw" width="800" height="800"></canvas>
+  <h1>HTML5 Canvas</h1>
+  <canvas id="draw" width="800" height="600"></canvas>
+  <br />
+  <button id="black" onclick=changeColor("black")>B</button>
+  <button id="red" onclick=changeColor("red")>B</button>
+  <button id="orange" onclick=changeColor("orange")>B</button>
+  <button id="yellow" onclick=changeColor("yellow")>B</button>
+  <button id="green" onclick=changeColor("green")>B</button>
+  <button id="blue" onclick=changeColor("blue")>B</button>
+  <button id="cyan" onclick=changeColor("cyan")>B</button>
+  <button id="purple" onclick=changeColor("purple")>B</button>
+  <button id="violet" onclick=changeColor("violet")>B</button>
+  Brush size:
+  <input name="Brush Size" value="10" type="range" id="size" min=1 max=100>
+  <t id="sizeDisplay">10px</t>
+  <button id="clearCanvas" onclick=clearCanvas()>Clear Canvas</button>
+  <br />
+  <br />
+  <iframe id="currentColor" width="50px" height="50px"></iframe>
   <script>
     const canvas = document.querySelector('#draw');
     const ctx = canvas.getContext('2d')
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // canvas.width = window.innerWidth;
+    // canvas.height = window.innerHeight;
     ctx.strokeStyle = '#BADA55'
     ctx.lineJoin = 'round'
     ctx.lineCap = 'round'
-    ctx.lineWidth = 100
+    ctx.lineWidth = 10
     // ctx.globalCompositeOperation = 'multiply'
 
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
-    let hue = 0;
+    let color = 'black';
     let direction = true;
 
-
+    function changeColor(e) {
+      color = e;
+      document.getElementById('currentColor').style = `background: ${e}`
+    }
+    function changeBrushSize(e) {
+      ctx.lineWidth = e.target.value
+      document.getElementById('sizeDisplay').innerHTML = `${e.target.value}px`
+    }
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
     function draw(e) {
       if (!isDrawing) return;
 
-      ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
+      ctx.strokeStyle = color;
 
       ctx.beginPath();
 
@@ -38,17 +66,17 @@
       ctx.lineTo(e.offsetX, e.offsetY);
       ctx.stroke();
       [lastX, lastY] = [e.offsetX, e.offsetY];
-      hue++;
-      if (hue >= 360) { hue = 0; }
+      // hue++;
+      // if (hue >= 360) { hue = 0; }
 
-      if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
-        direction = !direction;
-      }
-      if (direction) {
-        ctx.lineWidth++;
-      } else {
-        ctx.lineWidth--;
-      }
+      // if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+      //   direction = !direction;
+      // }
+      // if (direction) {
+      //   ctx.lineWidth++;
+      // } else {
+      //   ctx.lineWidth--;
+      // }
     }
 
 
@@ -58,16 +86,86 @@
     });
 
 
+    canvas.addEventListener('mousedown', draw);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', () => isDrawing = false);
-    canvas.addEventListener('mouseout', () => isDrawing = false);
+    canvas.addEventListener('mouseleave', () => isDrawing = false);
+    document.getElementById('size').addEventListener('input', changeBrushSize)
 
   </script>
 
   <style>
     html,
     body {
-      margin: 0;
+      width: 800px;
+      margin: 0 auto;
+      background: gray;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    h1{
+      color: white;
+    }
+    canvas {
+      margin: 0 auto;
+      background: white;
+    }
+
+    canvas {
+      border: 1px black solid;
+    }
+
+    button {
+      border: 1px solid white;
+    }
+    input {
+      position: relative;
+      top: 6px;
+    }
+    #red {
+      color: red;
+      background: red;
+    }
+
+    #orange {
+      color: orange;
+      background: orange;
+    }
+
+    #yellow {
+      color: yellow;
+      background: yellow;
+    }
+
+    #green {
+      color: green;
+      background: green;
+    }
+
+    #blue {
+      color: blue;
+      background: blue;
+    }
+    #cyan {
+      color: cyan;
+      background: cyan;
+    }
+    #purple {
+      color: purple;
+      background: purple;
+    }
+    #violet {
+      color: violet;
+      background: violet;
+    }
+
+    #black {
+      color: black;
+      background: black;
+    }
+
+    #currentColor {
+      background: black;
+
     }
   </style>
 
